@@ -4,8 +4,14 @@
  */
 package Login;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import database.DatabaseConnection;
 import Dashboard.Dashboard;
 import Registration.Registration;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,8 +25,22 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        createConnection();
     }
 
+    void createConnection() {
+            Connection connection = null;
+            Statement statement = null;
+            ResultSet rs = null;
+
+            // Get the connection object from DatabaseConnection class
+            connection = DatabaseConnection.getConnection();
+            if (connection != null) {
+                System.out.println("Connection successful!");
+            }
+            // Close resources using the closeResources method from DatabaseConnection class
+            DatabaseConnection.closeResources(connection, statement, rs);
+        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,6 +252,8 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);
