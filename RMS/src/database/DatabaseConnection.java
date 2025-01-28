@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 
 public class DatabaseConnection {
@@ -97,6 +98,22 @@ public class DatabaseConnection {
 
         return result;  // Return the result of the update operation
     }
+    
+   public static boolean registerUser(String username, String password, String securityAnswer) {
+    String query = "INSERT INTO users (username, password, security_answer) VALUES (?, ?, ?)";
+
+    try (Connection connection = getConnection();
+         PreparedStatement ps = connection.prepareStatement(query)) {
+        ps.setString(1, username);
+        ps.setString(2, password); // Plaintext password (not secure, use only in controlled environments)
+        ps.setString(3, securityAnswer);
+        return ps.executeUpdate() > 0; // Return true if the insertion was successful
+    } catch (SQLException e) {
+        e.printStackTrace(); // Replace with proper logging
+        return false;
+        }
+    }
+
 
 //     Method to close the resources
     public static void closeResources(Connection connection, Statement statement, ResultSet rs) {
