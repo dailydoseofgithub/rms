@@ -4,6 +4,8 @@
  */
 package Registration;
 
+import database.DatabaseConnection;
+
 /**
  *
  * @author user
@@ -228,7 +230,32 @@ public class Registration extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
+        // Get user input
+    String username = txtUsername.getText().trim();
+    String password = new String(txtPassword.getPassword()).trim();
+    String confirmPassword = new String(txtPassword1.getPassword()).trim();
+    String securityAnswer = txtSecurityQuestion.getText().trim();
 
+    // Validate input
+    if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || securityAnswer.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "All fields are required!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (!password.equals(confirmPassword)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Call the registration method
+    boolean isRegistered = DatabaseConnection.registerUser(username, password, securityAnswer);
+
+    // Handle registration result
+    if (isRegistered) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Registration successful!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        this.dispose(); // Close the registration window
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Registration failed. Try again.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void txtSecurityQuestionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSecurityQuestionMouseClicked

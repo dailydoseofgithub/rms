@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import database.DatabaseConnection;
 import Dashboard.Dashboard;
 import Registration.Registration;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -18,6 +19,8 @@ import javax.swing.JOptionPane;
  *
  * @author user
  */
+
+
 public class Login extends javax.swing.JFrame {
 
     /**
@@ -39,7 +42,7 @@ public class Login extends javax.swing.JFrame {
                 System.out.println("Connection successful!");
             }
             // Close resources using the closeResources method from DatabaseConnection class
-            DatabaseConnection.closeResources(connection, statement, rs);
+//            DatabaseConnection.closeResources(connection, statement, rs);
         }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -198,7 +201,21 @@ public class Login extends javax.swing.JFrame {
         Registration rg = new Registration();
         rg.setVisible(true);
     }//GEN-LAST:event_lblCreateAccountMouseClicked
-
+    private boolean validateLogin(String username, String password) {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT password FROM users WHERE username = ?")) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String storedPassword = rs.getString("password");
+                // Use BCrypt for comparison if passwords are hashed
+                return storedPassword.equals(password);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+        }
+        return false;
+    }
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
 
@@ -212,16 +229,17 @@ public class Login extends javax.swing.JFrame {
             txtPassword.grabFocus();
             return;
         }
-
-        if ((txtUsername.getText().equals("nice")) && (txtPassword.getText().equals("nice"))){
-            JOptionPane.showMessageDialog(Login.this, "Login successful. ");
-            Dashboard dshbrd = new Dashboard();
-            dshbrd.setVisible(true);
-        }else{
-            JOptionPane.showMessageDialog(Login.this, "Incorrect credentials. ");
+        String username = txtUsername.getText();
+        String password = new String(txtPassword.getPassword());
+        if (validateLogin(username, password)) {
+        JOptionPane.showMessageDialog(this, "Login successful.");
+        new Dashboard().setVisible(true); // Redirect to the dashboard
+        this.dispose(); // Close the login window
+        } else {
+            JOptionPane.showMessageDialog(this, "Incorrect username or password.");
             txtUsername.grabFocus();
-            return;
-        }
+            }
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
