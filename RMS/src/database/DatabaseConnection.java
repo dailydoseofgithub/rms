@@ -77,6 +77,29 @@ public class DatabaseConnection {
         return result;  // Return the result of the insert operation
     }
 
+    public static int insertItem(String name,String description,boolean isVeg,int price) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        int result = 0;
+
+        try {
+            connection = getConnection();
+            String query = "INSERT INTO insertItems (name,description,isVeg,price) VALUES (?, ?, ?,?)";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, name);     // Bind the 'name' parameter
+            ps.setString(2, description);
+            ps.setBoolean(3, isVeg);    // Bind the 'email' parameter
+            ps.setInt(1,price);
+        
+            result = ps.executeUpdate();  // Executes the insert query
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, "Error executing insert query", ex);
+        } finally {
+            closeResources(connection, ps, null);  // Close the resources
+        }
+
+        return result;  // Return the result of the insert operation
+    }
     // Method to update a user's email based on their id
     public static int updateUserEmail(int id, String newEmail) {
         Connection connection = null;

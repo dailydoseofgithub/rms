@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Dashboard;
-
+import database.DatabaseConnection;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,12 +11,13 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class Dashboard extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form Dashboard
      */
     public Dashboard() {
         initComponents();
+        getContentPane().setLayout(new java.awt.BorderLayout());
     }
 
     /**
@@ -70,13 +71,16 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         txtMenuItem = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
-        txtVegNonVeg = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
-        txtMenuPrice = new javax.swing.JTextField();
+        itemPrice = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        description = new javax.swing.JTextField();
+        AddItem = new javax.swing.JButton();
+        vegbutton = new javax.swing.JRadioButton();
         tblPnlStaffs = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -218,7 +222,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(tbdPblReservationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1011, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1059, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
         );
@@ -235,7 +239,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tbdPblReservationsLayout.createSequentialGroup()
-                .addContainerGap(271, Short.MAX_VALUE)
+                .addContainerGap(295, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -377,7 +381,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(77, 77, 77)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(873, Short.MAX_VALUE))
+                .addContainerGap(918, Short.MAX_VALUE))
         );
         tblPnlOrdersLayout.setVerticalGroup(
             tblPnlOrdersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,7 +390,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(tblPnlOrdersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
 
         tbPnlDashboard.addTab("Orders", tblPnlOrders);
@@ -494,14 +498,6 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel29.setText("Veg/Non Veg:");
-
-        txtVegNonVeg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtVegNonVegActionPerformed(evt);
-            }
-        });
-
         jLabel30.setText("Price:");
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -551,6 +547,28 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel32.setText("description");
+
+        description.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                descriptionActionPerformed(evt);
+            }
+        });
+
+        AddItem.setText("addItem");
+        AddItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddItemActionPerformed(evt);
+            }
+        });
+
+        vegbutton.setText("veg");
+        vegbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vegbuttonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tblPnlMenuLayout = new javax.swing.GroupLayout(tblPnlMenu);
         tblPnlMenu.setLayout(tblPnlMenuLayout);
         tblPnlMenuLayout.setHorizontalGroup(
@@ -558,23 +576,38 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(tblPnlMenuLayout.createSequentialGroup()
                 .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tblPnlMenuLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jLabel26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(tblPnlMenuLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel28)
-                            .addComponent(jLabel29)
-                            .addComponent(jLabel30))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                        .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMenuItem)
-                            .addComponent(txtVegNonVeg)
-                            .addComponent(txtMenuPrice))
-                        .addGap(49, 49, 49))
-                    .addGroup(tblPnlMenuLayout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel26)))
-                .addGap(114, 114, 114)
+                            .addGroup(tblPnlMenuLayout.createSequentialGroup()
+                                .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel28)
+                                    .addComponent(jLabel29)
+                                    .addComponent(jLabel30))
+                                .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tblPnlMenuLayout.createSequentialGroup()
+                                        .addGap(42, 42, 42)
+                                        .addComponent(txtMenuItem, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                                        .addGap(129, 129, 129))
+                                    .addGroup(tblPnlMenuLayout.createSequentialGroup()
+                                        .addGap(39, 39, 39)
+                                        .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(AddItem)
+                                            .addComponent(itemPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(tblPnlMenuLayout.createSequentialGroup()
+                                .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(vegbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(tblPnlMenuLayout.createSequentialGroup()
+                                        .addComponent(jLabel32)
+                                        .addGap(45, 45, 45)
+                                        .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(876, Short.MAX_VALUE))
+                .addGap(876, 876, 876))
         );
         tblPnlMenuLayout.setVerticalGroup(
             tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -587,18 +620,24 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel28)
                             .addComponent(txtMenuItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel29)
-                            .addComponent(txtVegNonVeg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
+                        .addGap(18, 18, 18)
+                        .addComponent(vegbutton)
+                        .addGap(18, 18, 18)
+                        .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel32)
+                            .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel29)
+                        .addGap(19, 19, 19)
                         .addGroup(tblPnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel30)
-                            .addComponent(txtMenuPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(itemPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(AddItem))
                     .addGroup(tblPnlMenuLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(235, Short.MAX_VALUE))
+                .addContainerGap(259, Short.MAX_VALUE))
         );
 
         tbPnlDashboard.addTab("Menu", tblPnlMenu);
@@ -824,7 +863,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(876, Short.MAX_VALUE))
+                .addContainerGap(924, Short.MAX_VALUE))
         );
         tblPnlStaffsLayout.setVerticalGroup(
             tblPnlStaffsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -833,7 +872,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(tblPnlStaffsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 250, Short.MAX_VALUE))
+                .addGap(0, 274, Short.MAX_VALUE))
         );
 
         tbPnlDashboard.addTab("Staffs", tblPnlStaffs);
@@ -922,9 +961,40 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMenuItemActionPerformed
 
-    private void txtVegNonVegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVegNonVegActionPerformed
+    private void descriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtVegNonVegActionPerformed
+    }//GEN-LAST:event_descriptionActionPerformed
+
+    private void AddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddItemActionPerformed
+       if (txtMenuItem.getText().isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(Dashboard.this, "Enter item name");
+        txtMenuItem.grabFocus();
+        return;
+        }
+    
+        String name = txtMenuItem.getText();
+        String description = txtDescription.getText();
+
+        // Assuming itemprice is a JTextField, converting it to integer
+        int price = Integer.parseInt(itemprice.getText()); 
+
+        // Correcting the variable name for isVeg
+        boolean isVeg = vegbutton.isSelected();
+
+        boolean isRegistered = DatabaseConnection.insertItem(name, description, price, isVeg);
+
+        
+        if (isRegistered) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Item added successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            this.dispose(); 
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Item not added", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_AddItemActionPerformed
+
+    private void vegbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vegbuttonActionPerformed
+               // TODO add your handling code here:
+    }//GEN-LAST:event_vegbuttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -962,11 +1032,14 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddItem;
     private javax.swing.JButton btnNewStaffAdd;
     private javax.swing.JButton btnOrdersPlaceOrder;
     private javax.swing.JButton btnReserve;
     private javax.swing.JButton btnStaffSearch;
     private javax.swing.JComboBox<String> cmboxInventoryItem;
+    private javax.swing.JTextField description;
+    private javax.swing.JTextField itemPrice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -992,6 +1065,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1025,7 +1099,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel tblPnlStaffs;
     private javax.swing.JTextField txtInventoryQuantity;
     private javax.swing.JTextField txtMenuItem;
-    private javax.swing.JTextField txtMenuPrice;
     private javax.swing.JTextField txtNewStaffContact;
     private javax.swing.JTextField txtNewStaffDateJoined;
     private javax.swing.JTextField txtNewStaffName;
@@ -1038,6 +1111,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField txtReservationDate;
     private javax.swing.JTextField txtReservationName;
     private javax.swing.JTextField txtStaffID;
-    private javax.swing.JTextField txtVegNonVeg;
+    private javax.swing.JRadioButton vegbutton;
     // End of variables declaration//GEN-END:variables
 }
