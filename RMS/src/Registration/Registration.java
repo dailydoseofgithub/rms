@@ -4,8 +4,8 @@
  */
 package Registration;
 
-import database.DatabaseConnection;
 
+import database.DatabaseConnection;
 /**
  *
  * @author user
@@ -43,6 +43,7 @@ public class Registration extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        pnlLogin.setBackground(new java.awt.Color(204, 204, 255));
         pnlLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 4, true));
 
         lblRegistration.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -187,17 +188,11 @@ public class Registration extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pnlLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+            .addComponent(pnlLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -230,8 +225,7 @@ public class Registration extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
-        // Get user input
-    String username = txtUsername.getText().trim();
+        String username = txtUsername.getText().trim();
     String password = new String(txtPassword.getPassword()).trim();
     String confirmPassword = new String(txtPassword1.getPassword()).trim();
     String securityAnswer = txtSecurityQuestion.getText().trim();
@@ -256,6 +250,7 @@ public class Registration extends javax.swing.JFrame {
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, "Registration failed. Try again.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
+    //GEN-LAST:event_btnRegisterActionPerformed
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void txtSecurityQuestionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSecurityQuestionMouseClicked

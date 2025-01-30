@@ -9,7 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DatabaseConnection {
 
@@ -77,7 +78,139 @@ public class DatabaseConnection {
         return result;  // Return the result of the insert operation
     }
 
-    // Method to update a user's email based on their id
+    public static int insertItem(String name, int price, boolean isVeg) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        int result = 0;
+        
+        boolean is_veg;
+//        if (isVeg==1){
+//            is_veg = true;
+//        }
+        try {
+            connection = getConnection();
+            String query = "INSERT INTO items (name,isVeg,price) VALUES (?, ?,?)";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, name);   
+            ps.setBoolean(2, isVeg);    
+            ps.setInt(3,price);
+            
+            result = ps.executeUpdate();  // Executes the insert query
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, "Error executing insert query", ex);
+        } finally {
+            closeResources(connection, ps, null);  // Close the resources
+        }
+
+        return result;  // Return the result of the insert operation
+    }
+    public static int insertStock(int itemnumber, String itemname, int quantity) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        int result = 0;
+//        if (isVeg==1){
+//            is_veg = true;
+//        }
+        try {
+            connection = getConnection();
+            String query = "INSERT INTO inventory (itemId,name,quantity) VALUES (?, ?,?)";
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, itemnumber);   
+            ps.setString(2, itemname);    
+            ps.setInt(3,quantity);
+            
+            result = ps.executeUpdate();  // Executes the insert query
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, "Error executing insert query", ex);
+        } finally {
+            closeResources(connection, ps, null);  // Close the resources
+        }
+
+        return result;  // Return the result of the insert operation
+    }
+    public static int makeOrder(String itemname, int tablenumber, int quantity) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        int result = 0;
+//        if (isVeg==1){
+//            is_veg = true;
+//        }
+        try {
+            connection = getConnection();
+            String query = "INSERT INTO orders (itemName,tableNumber,Quantity) VALUES (?, ?,?)";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, itemname);   
+            ps.setInt(2, tablenumber);    
+            ps.setInt(3,quantity);
+            
+            result = ps.executeUpdate();  // Executes the insert query
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, "Error executing insert query", ex);
+        } finally {
+            closeResources(connection, ps, null);  // Close the resources
+        }
+
+        return result;  // Return the result of the insert operation
+    }
+    public static int addStaff(String username,String number,String position,String salary,String dateJoined) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        int result = 0;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = dateFormat.parse(dateJoined);
+            System.out.println("date converted");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            connection = getConnection();
+            String query = "INSERT INTO staffs (staffName,contact,position,salary,dateJoined) VALUES (?, ?,?,?,?)";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, username);   
+            ps.setString(2, number);    
+            ps.setString(3,position);
+            ps.setString(4,salary);
+            ps.setDate(5,new java.sql.Date(date.getTime()));
+            
+            result = ps.executeUpdate();  // Executes the insert query
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, "Error executing insert query", ex);
+        } finally {
+            closeResources(connection, ps, null);  // Close the resources
+        }
+
+        return result;  // Return the result of the insert operation
+    }
+    public static int makeReservation(String username,String contacts,String dateJoined) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        int result = 0;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = dateFormat.parse(dateJoined);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            connection = getConnection();
+            String query = "INSERT INTO reservations (reservatorName,contact,date) VALUES (?, ?,?)";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, username);   
+            ps.setString(2, contacts);    
+            ps.setDate(3,new java.sql.Date(date.getTime()));
+            
+            result = ps.executeUpdate();  // Executes the insert query
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, "Error executing insert query", ex);
+        } finally {
+            closeResources(connection, ps, null);  // Close the resources
+        }
+
+        return result;  // Return the result of the insert operation
+    }
     public static int updateUserEmail(int id, String newEmail) {
         Connection connection = null;
         PreparedStatement ps = null;
@@ -113,7 +246,28 @@ public class DatabaseConnection {
         return false;
         }
     }
+   public static ResultSet getitems() {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet rs = null;
 
+        try {
+            connection = getConnection();
+            if (connection != null) {
+                statement = connection.createStatement();
+                rs = statement.executeQuery("SELECT * FROM items");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, "Error executing query", ex);
+        }
+        while (rs.next()) {
+                String name = rs.getString("name");
+                Boolean veg = rs.getBoolean("isVeg");
+                int price = rs.getInt("price");
+                model.addRow(new Object[]{name, veg, price});
+            }
+        return rs;  // Return the ResultSet containing all users
+    }
 
 //     Method to close the resources
     public static void closeResources(Connection connection, Statement statement, ResultSet rs) {
