@@ -4,6 +4,12 @@
  */
 package Login;
 
+import Dashboard.Dashboard;
+import ForgotPassword.ForgotPassword;
+import Registration.Registration;
+import database.DatabaseConnection;
+
+import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -13,14 +19,10 @@ import Registration.Registration;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author user
  */
-
-
 public class Login extends javax.swing.JFrame {
 
     /**
@@ -29,8 +31,9 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         createConnection();
+        
+       
     }
-
     void createConnection() {
             Connection connection = null;
             Statement statement = null;
@@ -60,9 +63,13 @@ public class Login extends javax.swing.JFrame {
         lblForgotPassword = new javax.swing.JLabel();
         lblCreateAccount = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
+        lb1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(153, 102, 0));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        pnlLogin.setBackground(new java.awt.Color(204, 204, 255));
         pnlLogin.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 4, true));
 
         lblLogin.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -93,6 +100,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         lblForgotPassword.setText("Forgot Password? Click here.");
+        lblForgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblForgotPasswordMouseClicked(evt);
+            }
+        });
 
         lblCreateAccount.setText("Don't have an account? Create one.");
         lblCreateAccount.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,22 +167,11 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(199, Short.MAX_VALUE)
-                .addComponent(pnlLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(pnlLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
-        );
+        getContentPane().add(pnlLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 54, -1, -1));
+
+        lb1.setBackground(new java.awt.Color(204, 204, 255));
+        lb1.setOpaque(true);
+        getContentPane().add(lb1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 490, 330));
 
         pack();
         setLocationRelativeTo(null);
@@ -239,8 +240,13 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Incorrect username or password.");
             txtUsername.grabFocus();
             }
-
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void lblForgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotPasswordMouseClicked
+        // TODO add your handling code here:
+        ForgotPassword fp = new ForgotPassword();
+        fp.setVisible(true);
+    }//GEN-LAST:event_lblForgotPasswordMouseClicked
 
     /**
      * @param args the command line arguments
@@ -270,8 +276,6 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);
@@ -281,6 +285,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JLabel lb1;
     private javax.swing.JLabel lblCreateAccount;
     private javax.swing.JLabel lblForgotPassword;
     private javax.swing.JLabel lblLogin;
