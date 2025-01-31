@@ -5,7 +5,9 @@
 package Dashboard;
 
 import database.DatabaseConnection;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,7 +20,17 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         initComponents();
-        DatabaseConnection.getitems();
+        List<List<Object>> items = DatabaseConnection.getItems(); // CORRECT!
+        List<List<Object>> inventory = DatabaseConnection.getInventory();
+        List<List<Object>> reservation = DatabaseConnection.getReservations();
+        loadReservations();
+        loadOrders();
+        loadInventory();
+        loadMenu();
+        System.out.println(items);
+        System.out.println(inventory);
+        System.out.println(reservation);
+        
     }
 
     /**
@@ -42,11 +54,10 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtReservationDate = new javax.swing.JTextField();
         jPanel12 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        reservationTable = new javax.swing.JTable();
         tblPnlOrders = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -59,13 +70,13 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblOngoingOrders = new javax.swing.JTable();
+        ongoingorders = new javax.swing.JTable();
         jLabel27 = new javax.swing.JLabel();
         tbdPnlInventory = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        inventorytable = new javax.swing.JTable();
         jPanel10 = new javax.swing.JPanel();
         lblAddInventory = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
@@ -101,10 +112,8 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
         txtStaffSearchContact = new javax.swing.JTextField();
         txtStaffSearchName = new javax.swing.JTextField();
-        txtStaffSearchID = new javax.swing.JTextField();
         txtStaffSearchSalary = new javax.swing.JTextField();
         txtStaffSearchPosition = new javax.swing.JTextField();
         txtStaffSearchDate = new javax.swing.JTextField();
@@ -227,56 +236,52 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel12.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Reserved Tables Today: ");
-
-        jLabel4.setText("......");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Available Tables Today:");
-
-        jLabel5.setText("......");
-
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel29.setText("Reservation Details");
+
+        reservationTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "ReservatorName", "contact", "dateforReservation"
+            }
+        ));
+        jScrollPane5.setViewportView(reservationTable);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel12Layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(54, 54, 54)
-                            .addComponent(jLabel5))
-                        .addGroup(jPanel12Layout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(54, 54, 54)
-                            .addComponent(jLabel4)))
-                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(123, 123, 123)
+                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                        .addContainerGap(19, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel29)
-                .addGap(51, 51, 51)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel4)))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel4))
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel5)))
-                .addContainerGap(173, Short.MAX_VALUE))
+                        .addGap(46, 46, 46)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         tbdPblReservations.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 380, 360));
@@ -389,7 +394,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
-        tblOngoingOrders.setModel(new javax.swing.table.DefaultTableModel(
+        ongoingorders.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -400,7 +405,7 @@ public class Dashboard extends javax.swing.JFrame {
                 "Item Name", "Quantity", "Table Number"
             }
         ));
-        jScrollPane2.setViewportView(tblOngoingOrders);
+        jScrollPane2.setViewportView(ongoingorders);
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel27.setText("Ongoing Orders");
@@ -456,7 +461,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel25.setText("Available Inventory");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        inventorytable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -467,7 +472,7 @@ public class Dashboard extends javax.swing.JFrame {
                 "Item No.", "Item Name", "Quantity"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(inventorytable);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -771,8 +776,23 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel13.setText("Enter Staff ID:");
 
         txtStaffID.setText("Eg: 12345");
+        txtStaffID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtStaffIDMouseClicked(evt);
+            }
+        });
+        txtStaffID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStaffIDActionPerformed(evt);
+            }
+        });
 
         btnStaffSearch.setText("Search");
+        btnStaffSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStaffSearchActionPerformed(evt);
+            }
+        });
 
         jPanel5.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -786,7 +806,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel22.setText("Date Joined: ");
 
-        jLabel23.setText("Staff ID:");
+        txtStaffSearchPosition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStaffSearchPositionActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setText("Edit Staff Details");
@@ -798,6 +822,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("Delete Staff");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -808,13 +837,11 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel18)
                     .addComponent(jLabel19)
-                    .addComponent(jLabel23)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtStaffSearchID)
                     .addComponent(txtStaffSearchName)
                     .addComponent(txtStaffSearchContact)
                     .addComponent(txtStaffSearchPosition)
@@ -831,11 +858,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(txtStaffSearchID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(43, 43, 43)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
                     .addComponent(txtStaffSearchName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1046,6 +1069,54 @@ public class Dashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadReservations() {
+        // Get reservations from database
+        List<List<Object>> reservations = DatabaseConnection.getReservations();
+
+        // Get table model
+        DefaultTableModel model = (DefaultTableModel) reservationTable.getModel();
+
+        // Clear existing rows (if necessary)
+        model.setRowCount(0);
+
+        // Populate the table with data
+        for (List<Object> reservation : reservations) {
+            if (reservation.get(2) instanceof java.sql.Date) {
+                reservation.set(2, reservation.get(2).toString()); // Convert Date to String
+            }
+            model.addRow(reservation.toArray());
+        }
+    }
+    private void loadOrders() {
+        // Get orders from the database
+        List<List<Object>> orders = DatabaseConnection.getOrder(); // Replace with actual method
+
+
+        // Get table model
+        DefaultTableModel model = (DefaultTableModel) ongoingorders.getModel();
+
+        // Clear existing rows
+        model.setRowCount(0);
+
+        // Populate the table with data
+        for (List<Object> order : orders) {
+            model.addRow(order.toArray()); // Convert List<Object> to Object[]
+        }
+    }
+    private void loadInventory() {
+
+    List<List<Object>> inventory = DatabaseConnection.getInventory(); // Replace with actual method
+
+
+
+    DefaultTableModel model = (DefaultTableModel) inventorytable.getModel();
+
+    model.setRowCount(0);
+
+    for (List<Object> item : inventory) {
+        model.addRow(item.toArray());
+    }
+}
     private void txtReservationNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtReservationNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtReservationNameActionPerformed
@@ -1079,6 +1150,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         // Call the registration method
        DatabaseConnection.makeReservation(ReservatorName, contacts, dateforReg);
+       loadReservations();
         
 
     }//GEN-LAST:event_btnReserveActionPerformed
@@ -1130,6 +1202,17 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String name= txtStaffSearchName.getText();
+        String contact = txtStaffSearchContact.getText();
+        String position = txtStaffSearchPosition.getText();
+        String salary = txtStaffSearchSalary.getText();
+        String date = txtStaffSearchDate.getText();
+        List<List<Object>> staffs = DatabaseConnection.updateStaff(name,contact,position,salary,date);
+        if (staffs.isEmpty()) {  // If no records found, show notice
+        JOptionPane.showMessageDialog(this, "No staff found with ID: " + name, "Not Found", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(this, "Staff found! Check details in the table.", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnMenuAdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuAdd2ActionPerformed
@@ -1149,7 +1232,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         DatabaseConnection.insertItem(name, price, isVeg);
 
-        
+        loadMenu();
     }//GEN-LAST:event_btnMenuAdd2ActionPerformed
 
     private void txtInventoryItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInventoryItemActionPerformed
@@ -1179,11 +1262,29 @@ public class Dashboard extends javax.swing.JFrame {
         
         // Call the registration method
         DatabaseConnection.insertStock(stockNumber, itemname, quantityNum);
+        loadInventory();
 
-
-// TODO add your handling code here:
     }//GEN-LAST:event_btnInventoryAdd1ActionPerformed
 
+    
+    private void loadMenu() {
+    // Get menu data from the database
+    List<List<Object>> menuItems = DatabaseConnection.getItems(); // Replace with actual method
+
+
+    DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+    model.setRowCount(0);
+
+    for (List<Object> item : menuItems) {
+        Object availability = ((boolean) item.get(1)) ? "Veg" : "Non-veg";
+        model.addRow(new Object[]{item.get(0), availability, item.get(2)});
+    }
+}
+    private void loadStaff(){
+        
+    }
+    
     private void btnOrdersPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdersPlaceOrderActionPerformed
         String itemname = txtOrdersItemName.getText();
         String tablenumber  = txtOrdersTableNo.getText();
@@ -1202,6 +1303,7 @@ public class Dashboard extends javax.swing.JFrame {
         
         // Call the registration method
         DatabaseConnection.makeOrder(itemname, tableNum, quantityNum);
+        loadOrders();
     }//GEN-LAST:event_btnOrdersPlaceOrderActionPerformed
 
     private void btnNewStaffAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewStaffAddActionPerformed
@@ -1221,6 +1323,59 @@ public class Dashboard extends javax.swing.JFrame {
        DatabaseConnection.addStaff(username, number, position,salary,dateJoined);
   // TODO add your handling code here:
     }//GEN-LAST:event_btnNewStaffAddActionPerformed
+
+    private void btnStaffSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStaffSearchActionPerformed
+        // TODO add your handling code here:
+        String name = txtStaffID.getText();
+        if (name.isEmpty()) {  // If input is empty, show error
+        JOptionPane.showMessageDialog(this, "Please enter a Staff ID!", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        List<List<Object>> staffs = DatabaseConnection.getStaffs(name);
+        if (staffs.isEmpty()) {  // If no records found, show notice
+        JOptionPane.showMessageDialog(this, "No staff found with ID: " + name, "Not Found", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(this, "Staff found! Check details.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        List<Object> staff = staffs.get(0); // Get the first staff record
+
+        // Assign values to respective text fields
+        txtStaffSearchName.setText(staff.get(0).toString());       // Name
+        txtStaffSearchContact.setText(staff.get(1).toString());    // Contact Number
+        txtStaffSearchPosition.setText(staff.get(2).toString());       // Role
+        txtStaffSearchSalary.setText(staff.get(3).toString());     // Salary
+
+        // Convert SQL Date to String for display
+        if (staff.get(4) instanceof java.sql.Date) {
+            txtStaffSearchDate.setText(staff.get(4).toString());   // Join Date
+        }
+    }
+    }//GEN-LAST:event_btnStaffSearchActionPerformed
+
+    private void txtStaffIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStaffIDActionPerformed
+        // TODO add your handling code here:txtStaffID.setText("");
+    }//GEN-LAST:event_txtStaffIDActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String username = txtStaffID.getText().trim();
+        int r = DatabaseConnection.deleteStaff(username);
+     if (r == 1) { 
+
+        JOptionPane.showMessageDialog(this, "Staff deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(this, "Staff not found! Check details in the table.", "Failure", JOptionPane.WARNING_MESSAGE);
+    }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtStaffIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtStaffIDMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtStaffIDMouseClicked
+
+    private void txtStaffSearchPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStaffSearchPositionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStaffSearchPositionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1264,6 +1419,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnOrdersPlaceOrder;
     private javax.swing.JButton btnReserve;
     private javax.swing.JButton btnStaffSearch;
+    private javax.swing.JTable inventorytable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -1277,16 +1433,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -1298,7 +1451,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1317,16 +1469,17 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblAddInventory;
+    private javax.swing.JTable ongoingorders;
     private javax.swing.JRadioButton rbNonVeg2;
     private javax.swing.JRadioButton rbVeg2;
+    private javax.swing.JTable reservationTable;
     private javax.swing.JTextField stockitemnumber;
     private javax.swing.JTabbedPane tbPnlDashboard;
     private javax.swing.JPanel tbdPblReservations;
     private javax.swing.JPanel tbdPnlInventory;
-    private javax.swing.JTable tblOngoingOrders;
     private javax.swing.JPanel tblPnlMenu;
     private javax.swing.JPanel tblPnlOrders;
     private javax.swing.JPanel tblPnlStaffs;
@@ -1348,7 +1501,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField txtStaffID;
     private javax.swing.JTextField txtStaffSearchContact;
     private javax.swing.JTextField txtStaffSearchDate;
-    private javax.swing.JTextField txtStaffSearchID;
     private javax.swing.JTextField txtStaffSearchName;
     private javax.swing.JTextField txtStaffSearchPosition;
     private javax.swing.JTextField txtStaffSearchSalary;

@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ForgotPassword;
-
+import database.DatabaseConnection;
+import javax.swing.JOptionPane;
 /**
  *
  * @author user
@@ -204,6 +205,7 @@ public class ForgotPassword extends javax.swing.JFrame {
 
     private void txtResetPasswordUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtResetPasswordUsernameActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtResetPasswordUsernameActionPerformed
 
     private void txtResetPassword1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtResetPassword1MouseClicked
@@ -222,6 +224,22 @@ public class ForgotPassword extends javax.swing.JFrame {
 
     private void btnResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPasswordActionPerformed
         // TODO add your handling code here:
+        String username = txtResetPasswordUsername.getText();
+        String password1 = txtResetPassword1.getText();
+        String password2 = txtResetPassword2.getText();
+        String securityQtn = txtSecurityQuestion.getText();
+        
+        if (password1.equals(password2)){
+            boolean updated = DatabaseConnection.updatePassword(username, securityQtn, password1);
+            if (updated==true){
+                JOptionPane.showMessageDialog(this, "password updated succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, "passwor dupdate failed", "Failure", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "password doesnot match", "Failure", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnResetPasswordActionPerformed
 
     private void txtSecurityQuestionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSecurityQuestionMouseClicked

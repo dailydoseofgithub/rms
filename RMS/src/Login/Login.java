@@ -167,7 +167,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        getContentPane().add(pnlLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 54, -1, -1));
+        getContentPane().add(pnlLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
 
         lb1.setBackground(new java.awt.Color(204, 204, 255));
         lb1.setOpaque(true);
@@ -179,7 +179,6 @@ public class Login extends javax.swing.JFrame {
 
     private void txtUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsernameMouseClicked
         // TODO add your handling code here:
-        txtUsername.setText("");
     }//GEN-LAST:event_txtUsernameMouseClicked
 
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
