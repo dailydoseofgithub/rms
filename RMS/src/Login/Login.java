@@ -167,7 +167,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        getContentPane().add(pnlLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 54, -1, -1));
+        getContentPane().add(pnlLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, -1, -1));
 
         lb1.setBackground(new java.awt.Color(204, 204, 255));
         lb1.setOpaque(true);
