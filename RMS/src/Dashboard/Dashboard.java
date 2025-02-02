@@ -1126,7 +1126,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_txtReservationContactActionPerformed
 
     private void btnReserveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReserveActionPerformed
-        // TODO add your handling code here:
+        // this is the code for our Reservation page.
         
         
         if (txtReservationName.getText().trim().isEmpty()){
@@ -1215,6 +1215,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    // Code for the menu tab.
     private void btnMenuAdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuAdd2ActionPerformed
        if (txtMenuItem2.getText().isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(Dashboard.this, "Enter item name");
